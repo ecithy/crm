@@ -1,0 +1,16 @@
+{% extends 'arya/layout.html' %}
+{% load static %}
+{% load arya_form %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'arya/css/form-control.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <div>
+        {{ formf.username }}
+        <h1>修改数据</h1>
+        {% show_form form %}
+    </div>
+{% endblock %}

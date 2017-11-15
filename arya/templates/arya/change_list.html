@@ -1,0 +1,100 @@
+{% extends 'arya/layout.html' %}
+{% load arya_list %}
+
+
+{% block css %}
+    <style>
+        .row{
+            margin: 5px 15px;
+        }
+        .comb-search .row .whole{
+            width: 60px;
+            float: left;
+
+        }
+        .comb-search .row .others{
+            padding-left: 60px;
+        }
+
+        .comb-search .row a {
+            display: inline-block;
+            padding: 5px 8px;
+            margin: 3px;
+            border: 1px solid #d4d4d4;
+
+        }
+
+        .comb-search .row a {
+            display: inline-block;
+            padding: 5px 8px;
+            margin: 3px;
+            border: 1px solid #d4d4d4;
+        }
+
+        .comb-search a.active {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+
+    <div>
+        <h1>数据列表</h1>
+        {% if cl.list_filter %}
+            <div class="comb-search">
+                {% for row in cl.gen_list_filter %}
+                    <div class="row">
+                        {% for col in row %}
+                            {% if forloop.first %}
+                                {{ col }}
+                            {% else %}
+                                {{ col }}
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post" class="form-horizontal">
+            {% csrf_token %}
+            <div class="row" style="padding: 5px 0">
+                <!-- 定制Action -->
+                {% if cl.actions %}
+                    {% show_action cl %}
+                {% endif %}
+                <!-- 添加按钮 -->
+                {{ cl.add_btn|safe }}
+            </div>
+            <div class="row">
+                <!-- 数据表格 -->
+                {% show_result_list cl %}
+                <div style="text-align: right">
+                    <ul class="pagination" style="margin: 0;">
+                        {{ cl.pager.page_html|safe }}
+                    </ul>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function () {
+            $('#headCheckBox').click(function () {
+                $(this).parent().parent().parent().next().find(':checkbox').prop('checked', $(this).prop('checked'));
+            })
+
+        })
+
+    </script>
+{% endblock %}
